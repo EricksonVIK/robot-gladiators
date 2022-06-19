@@ -1,38 +1,21 @@
-// window.alert("This is an alert! Java Script is running")
-
-// this creates a function named "fight"
-// declared function
-// function fight() {
-//     window.alert("The fight has begun!");
-// }
-// // called function
-// fight();
-
-// var playerName = window.prompt("What is your robot's name?");
-
-// console.log(playerName);
-
-// console.log("This logs a string, goof for leaving yourself a message");
-
-// console.log(10+10);
-
-// console.log("Our robot's name is "+playerName)
-
+// Game States
+// "win" - Player robot has defeated all enemy-robots
+//    * fight all enemy-robots
+//    * defeat each enemy-robot
+// "lose" - player robot's health is zero or less
 var playerName = window.prompt("What is your robot's name?");
 var playerHealth = 100;
 var playerAttack = 10;
+var playerMoney = 10;
 
 // You can also log multiple values at once like this.
 // console.log(playerName, playerAttack, playerHealth);
 
-var enemyName = "Roborto";
+var enemyNames = ["Roborto", "Amy Android", "Robo Trumble"]; 
 var enemyHealth = 50;
 var enemyAttack = 12;
 
-// player money variable
-var playerMoney = 10;
-
-var fight = function(){
+var fight = function(enemyName){
     // Alert players that they are starting the round
     window.alert("Welcome to Robot Gladiators!")
 
@@ -89,8 +72,8 @@ var fight = function(){
     }
 }    
 
-    
-
-
-
-fight();
+// fight() - Single round for function
+for(var i = 0; i < enemyNames.length; i++){
+    fight(enemyNames[i]);
+}
+// Notice that the fight() function call was replaced with a for loop that calls the fight() function multiple times using the element in the enemyNames[i] array as the argument.
