@@ -44,45 +44,56 @@ var fightOrSkip = function(){
 }
 // Fight Function
 var fight = function(enemy){
+    // keep track of who goes first
+    var isPlayerTurn=true;
+
+    if (Math.random() > 0.5){
+        isPlayerTurn = false;
+    }
     // repeat and execute as long as the enemy-robot is alive
     while(playerInfo.health > 0 && enemy.health > 0){
-        if (fightOrSkip()){
-            break;
-        };
+        if (isPlayerTurn){
+            if (fightOrSkip()){
+                break;
+            };
 
-        var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack)
-        enemy.health = Math.max(0, enemy.health - damage);
-        console.log(damage)
-        console.log (
-        playerInfo.name + " attacked " + enemy.name + " ." + enemy.name + " now has " + enemy.health + " health remaining.");
+            var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack)
+            enemy.health = Math.max(0, enemy.health - damage);
+            console.log(damage)
+            console.log (
+            playerInfo.name + " attacked " + enemy.name + " ." + enemy.name + " now has " + enemy.health + " health remaining.");
             
 
-        // check enemy's health
-        if (enemy.health <= 0){
-            window.alert(enemy.name + " has died!");
-            // award player money for wining
-            playerInfo.money= playerInfo.money +20;
-            console.log (playerInfo.name + " has " + playerInfo.money)
-            break;
+            // check enemy's health
+            if (enemy.health <= 0){
+                window.alert(enemy.name + " has died!");
+                // award player money for wining
+                playerInfo.money= playerInfo.money +20;
+                console.log (playerInfo.name + " has " + playerInfo.money)
+                // leave while loop with break
+                break;
+            } else {
+                window.alert(enemy.name + " still has " + enemy.health + " health left.")
+            }
         } else {
-            window.alert(enemy.name + " still has " + enemy.health + " health left.")
+        
+            // remove player's health by subtracting the amout st in the enemy.attack
+            var damage= randomNumber (enemy.attack - 3, enemy.attack);
+            playerInfo.health = Math.max(0, playerInfo.health - damage);
+            console.log(damage)
+            console.log(
+                enemy.name + " attacked " + playerInfo.name + " . " + playerInfo.name + " now has " + playerInfo.health + " health remaining."
+            );
+
+            // check player's health
+            if (playerInfo.health <=0){
+                window.alert(playerInfo.name + " has died.");
+                break;
+            } else {
+                window.alert(playerInfo.name + " still has " + playerInfo.health + " health left.");
+            }  
         }
-
-        // remove player's health by subtracting the amout st in the enemy.attack
-        var damage= randomNumber (enemy.attack - 3, enemy.attack);
-        playerInfo.health = Math.max(0, playerInfo.health - damage);
-        console.log(damage)
-        console.log(
-            enemy.name + " attacked " + playerInfo.name + " . " + playerInfo.name + " now has " + playerInfo.health + " health remaining."
-        );
-
-        // check player's health
-        if (playerInfo.health <=0){
-            window.alert(playerInfo.name + " has died.");
-            break;
-        } else {
-            window.alert(playerInfo.name + " still has " + playerInfo.health + " health left.");
-        }   
+        isPlayerTurn = !isPlayerTurn;
     }    
 };
 
@@ -156,36 +167,21 @@ var endGame = function(){
 var shop = function() {
     // ask player what they'd like to do
     var shopOptionPrompt = 
-        window.prompt("Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one: 'Refill', 'UPGRADE', or 'LEAVE' to make a choice");
+        window.prompt("Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter 1 for Refill, 2 for Upgrade, or 3 to Leave.");
+    shopOptionPrompt = parseInt(shopOptionPrompt);
     switch (shopOptionPrompt){
-        case "REFILL":
-        case "refill":
-            // if (playerInfo.money >= 7){
-            // window.alert("Refilling player's health by 20 for 7 dollars.");
-            // playerInfo.health = playerInfo.health + 20;
-            // playerInfo.money = playerInfo.money - 7;
-            // }
-            // else{
-            //     window.alert("You don't have enought money.")
-            // }
-            playerInfo.refillHealth();
+        // health
+        case 1:
+             playerInfo.refillHealth();
             break;
 
-        case "UPGRADE":
-        case "upgrade":
-            // if (playerInfo.money >= 7){
-            // window.alert("Upgrading player's attack by 6 for 7 dollars.");
-            // playerInfo.attack = playerInfo.attack + 6;
-            // playerInfo.money = playerInfo.money -7;
-            // }
-            // else{
-            //     window.alert("You don't have enough money.")
-            // }
+        // upgrade
+        case 2:
             playerInfo.upgradeAttack();
             break;
 
-        case "LEAVE":
-        case "leave":
+        // leave
+        case 3:
             window.alert("Leaving the store.");
             break;
 
