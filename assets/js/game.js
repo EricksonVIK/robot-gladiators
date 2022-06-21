@@ -72,7 +72,7 @@ var fight = function(enemy){
     }    
 };
 
-// fight() - Single round for function - function below integrates 
+// Fight Loop
 var startGame = function(){
     for(var i = 0; i < enemyInfo.length; i++){
         // reset player stats
@@ -187,9 +187,19 @@ var randomNumber = function (min, max){
     return value;
 }
 
+// null player name function fix
+var getPlayerName = function (){
+    var name = "";
+
+    while (name === "" || name === null){
+        name = prompt("What is your robot's name?")
+    }
+    console.log("Your robot's name is " + name);
+    return name;
+};
 // Player Variable
 var playerInfo = {
-    name: window.prompt("What is your robot's name?"),
+    name: getPlayerName (),
     health: 100,
     attack: 10,
     money: 10,
